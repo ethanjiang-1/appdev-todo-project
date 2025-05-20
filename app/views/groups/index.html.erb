@@ -1,0 +1,10 @@
+<h1> Your Groups </h1>
+
+<ul>
+  <% @groups.each do |group| %>
+    <li><%= link_to group.name, group_path(group) %></li>
+  <% end %>
+  <% if @groups.empty? %>
+    <li style="color: #888;">You are not a member of any groups.</li>
+  <% end %>
+</ul>
