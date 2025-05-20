@@ -13,4 +13,15 @@ class TasksController < ApplicationController
 
     render template: "tasks/index"
   end
+
+  def show
+    @task = Task.find(params[:id])
+    render template: "tasks/show"
+  end
+
+  def show_group
+    @group = Group.find(params[:group_id])
+    @task = Task.find(params[:task_id])
+    render template: "tasks/show"
+  end
 end

@@ -16,4 +16,15 @@ Rails.application.routes.draw do
 
   root "tasks#index"
 
+  #tasks
+  get "/tasks" => "tasks#index"
+  get "/tasks/:id" => "tasks#show"
+
+  #groups
+  get "/groups" => "groups#index"
+  get "/groups/:id" => "groups#show"
+  get "/groups/:group_id/tasks/:task_id" => "tasks#show_group"
+
+
+
 end
