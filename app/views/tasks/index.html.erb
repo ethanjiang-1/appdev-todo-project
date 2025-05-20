@@ -1,1 +1,64 @@
-<h1>Tasks</h1>
+<h1>Welcome, <%= current_user %></h1>
+
+<div style="max-width: 800px; margin: 0 auto;">
+  <!-- Personal Tasks Table -->
+  <h2>Personal Tasks</h2>
+  <table style="width: 100%; table-layout: fixed; border-collapse: collapse; margin-bottom: 2em; border: 1px solid #ccc;">
+    <thead>
+      <tr>
+        <th style="width: 40%; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc;">Task Name</th>
+        <th style="width: 30%; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc; text-align: center;">Due Date</th>
+        <th style="width: 30%; border-bottom: 1px solid #ccc; text-align: center;">Show Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @personal_tasks.each do |task| %>
+        <tr>
+          <td style="border-right: 1px solid #ccc;"> <%= task.title %> </td>
+          <td style="text-align: center; border-right: 1px solid #ccc;"> <%= task.due_date&.strftime('%Y-%m-%d') %> </td>
+          <td style="text-align: center;"> <%= link_to 'Show', task_path(task) %> </td>
+        </tr>
+      <% end %>
+      <% if @personal_tasks.empty? %>
+        <tr><td colspan="3" style="text-align:center; color: #888;">No personal tasks found.</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <!-- Groups List -->
+  <h2>Your Groups</h2>
+  <ul>
+    <% @groups.each do |group| %>
+      <li><%= link_to group.name, group_path(group) %></li>
+    <% end %>
+    <% if @groups.empty? %>
+      <li style="color: #888;">You are not a member of any groups.</li>
+    <% end %>
+  </ul>
+
+  <!-- Group Tasks Table -->
+  <h2>Group Tasks</h2>
+  <table style="width: 100%; table-layout: fixed; border-collapse: collapse; border: 1px solid #ccc;">
+    <thead>
+      <tr>
+        <th style="width: 25%; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc;">Task Name</th>
+        <th style="width: 25%; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc;">Group Name</th>
+        <th style="width: 25%; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc; text-align: center;">Due Date</th>
+        <th style="width: 25%; border-bottom: 1px solid #ccc; text-align: center;">Show Details</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @group_tasks.each do |task| %>
+        <tr>
+          <td style="border-right: 1px solid #ccc;"> <%= task.title %> </td>
+          <td style="border-right: 1px solid #ccc;"> <%= link_to task.listable.name, group_path(task.listable) %> </td>
+          <td style="text-align: center; border-right: 1px solid #ccc;"> <%= task.due_date&.strftime('%Y-%m-%d') %> </td>
+          <td style="text-align: center;"> <%= link_to 'Show', group_task_path(task.listable, task) %> </td>
+        </tr>
+      <% end %>
+      <% if @group_tasks.empty? %>
+        <tr><td colspan="4" style="text-align:center; color: #888;">No group tasks found.</td></tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

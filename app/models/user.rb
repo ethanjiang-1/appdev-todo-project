@@ -5,6 +5,8 @@
 #  id                     :bigint           not null, primary key
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
+#  first_name             :string
+#  last_name              :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
@@ -29,4 +31,7 @@ class User < ApplicationRecord
 
   has_many :created_tasks, class_name: "Task", foreign_key: :creator_id, dependent: :nullify, inverse_of: :creator
   has_many :tasks, as: :listable, dependent: :destroy, inverse_of: :listable
+
+  validates :first_name, presence: true
+  validates :last_name, presence: true
 end

@@ -16,14 +16,19 @@ task sample_data: :environment do
   User.destroy_all
 
   puts "== Creating users =="
-  example_user = User.create!(
-    email: "example@email.com",
-    password: "password",
-    password_confirmation: "password"
-  )
-  users = 5.times.map do
+  user_data = [
+    { first_name: "Alice", last_name: "Example", email: "alice@example.com" },
+    { first_name: "Bob", last_name: "Example", email: "bob@example.com" },
+    { first_name: "Chris", last_name: "Example", email: "chris@example.com" },
+    { first_name: "Dave", last_name: "Example", email: "dave@example.com" },
+    { first_name: "Emma", last_name: "Example", email: "emma@example.com" },
+    { first_name: "Frank", last_name: "Example", email: "frank@example.com" }
+  ]
+  users = user_data.map do |data|
     User.create!(
-      email: Faker::Internet.unique.email,
+      first_name: data[:first_name],
+      last_name: data[:last_name],
+      email: data[:email],
       password: "password",
       password_confirmation: "password"
     )
