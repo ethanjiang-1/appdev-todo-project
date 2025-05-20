@@ -9,6 +9,11 @@
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
     <style>
+      nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
       nav ul {
         display: flex;
         justify-content: flex-end;
@@ -20,20 +25,43 @@
       nav ul li {
         padding: 0;
       }
+      .nav-left {
+        display: flex;
+        justify-content: flex-start;
+        list-style: none;
+        padding: 8px 8px;
+        margin: 0;
+        gap: 24px;
+      }
+      .nav-center {
+        flex: 1;
+        text-align: center;
+      }
     </style>
   </head>
 
   <body>
     <nav>
-      <ul>
-        <% if user_signed_in? %>
-          <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
-          <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
-        <% else %>
-          <li><%= link_to "Sign In", new_user_session_path %></li>
-          <li><%= link_to "Sign Up", new_user_registration_path %></li>
-        <% end %>
-      </ul>
+      <div>
+        <ul class="nav-left">
+          <li><%= link_to "Home", root_path %></li>
+          <li><%= link_to "Groups", groups_path %></li>
+        </ul>
+      </div>
+      <div class="nav-center">
+        <%= Time.zone.now.strftime("%A, %B %e, %Y") %>
+      </div>
+      <div>
+        <ul>
+          <% if user_signed_in? %>
+            <li><%= link_to "Edit Profile", edit_user_registration_path %></li>
+            <li><%= link_to "Sign Out", destroy_user_session_path, method: :delete %></li>
+          <% else %>
+            <li><%= link_to "Sign In", new_user_session_path %></li>
+            <li><%= link_to "Sign Up", new_user_registration_path %></li>
+          <% end %>
+        </ul>
+      </div>
     </nav>
     <%= yield %>
   </body>
