@@ -1,1 +1,37 @@
 <h1> <%= @group.name %> </h1>
+
+<hr>
+
+<h2> Group members: </h2>
+<ul>
+  <% @group.users.each do |user| %>
+    <li><%= user.first_name %> <%= user.last_name %></li>
+  <% end %>
+</ul>
+
+<hr>
+
+<h2> Group tasks: </h2>
+<table style="width: 100%; table-layout: fixed; border-collapse: collapse; border: 1px solid #ccc;">
+  <thead>
+    <tr>
+      <th style="width: 40%; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc;">Task Name</th>
+      <th style="width: 30%; border-bottom: 1px solid #ccc; border-right: 1px solid #ccc; text-align: center;">Due Date</th>
+      <th style="width: 30%; border-bottom: 1px solid #ccc; text-align: center;">Show Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @group.tasks.each do |task| %>
+      <tr>
+        <td style="border-right: 1px solid #ccc;"> <%= task.title %> </td>
+        <td style="text-align: center; border-right: 1px solid #ccc;"> <%= task.due_date&.strftime('%Y-%m-%d') %> </td>
+        <td style="text-align: center;"> <%= link_to 'Show', group_task_path(@group, task) %> </td>
+      </tr>
+    <% end %>
+    <% if @group.tasks.empty? %>
+      <tr><td colspan="3" style="text-align:center; color: #888;">No group tasks found.</td></tr>
+    <% end %>
+  </tbody>
+</table>
+<hr>
+<%= link_to 'Back', groups_path, class: 'btn btn-secondary' %>
