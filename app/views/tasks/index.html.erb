@@ -18,7 +18,13 @@
     <tbody>
       <% @personal_tasks.each do |task| %>
         <tr>
-          <td style="border-right: 1px solid #ccc;"> <%= task.title %> </td>
+          <td style="border-right: 1px solid #ccc;"> 
+            <% if task.completed_at.nil? %>
+              <span style="color: red;"><%= task.title %></span>
+            <% else %>
+              <span style="color: green;"><%= task.title %></span>
+            <% end %>
+          </td>
           <td style="text-align: center; border-right: 1px solid #ccc;"> <%= task.due_date&.strftime('%x') %> </td>
           <td style="text-align: center;"> <%= link_to 'Show', task_path(task) %> </td>
         </tr>
@@ -54,7 +60,13 @@
     <tbody>
       <% @group_tasks.each do |task| %>
         <tr>
-          <td style="border-right: 1px solid #ccc;"> <%= task.title %> </td>
+          <td style="border-right: 1px solid #ccc;">
+            <% if task.completed_at.nil? %>
+              <span style="color: red;"><%= task.title %></span>
+            <% else %>
+              <span style="color: green;"><%= task.title %></span>
+            <% end %>
+          </td>
           <td style="border-right: 1px solid #ccc; text-align:center"> <%= link_to task.listable.name, group_path(task.listable) %> </td>
           <td style="text-align: center; border-right: 1px solid #ccc;"> <%= task.due_date&.strftime('%x') %> </td>
           <td style="text-align: center;"> <%= link_to 'Show', group_task_path(task.listable, task) %> </td>

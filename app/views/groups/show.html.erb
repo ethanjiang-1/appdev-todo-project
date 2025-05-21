@@ -5,7 +5,14 @@
 <h2> Group members: </h2>
 <ul>
   <% @group.users.each do |user| %>
-    <li><%= user.first_name %> <%= user.last_name %></li>
+    <li>
+      <% membership = GroupMembership.find_by(user_id: user.id, group_id: @group.id) %>
+      <% if membership && membership.role == "admin" %>
+        <%= user.first_name %> <%= user.last_name %> <%= "(Admin)" %>
+      <% else %>
+        <%= user.first_name %> <%= user.last_name %>
+      <% end %>
+    </li>
   <% end %>
 </ul>
 
@@ -24,7 +31,13 @@
     <tbody>
       <% @group.tasks.each do |task| %>
         <tr>
-          <td style="border-right: 1px solid #ccc;"> <%= task.title %> </td>
+          <td style="border-right: 1px solid #ccc;">
+            <% if task.completed_at.nil? %>
+              <span style="color: red;"><%= task.title %></span>
+            <% else %>
+              <span style="color: green;"><%= task.title %></span>
+            <% end %>
+          </td>
           <td style="text-align: center; border-right: 1px solid #ccc;"> <%= task.due_date&.strftime('%m/%d/%Y') %> </td>
           <td style="text-align: center;"> <%= link_to 'Show', group_task_path(@group, task) %> </td>
         </tr>
