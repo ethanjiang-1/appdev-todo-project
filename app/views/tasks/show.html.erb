@@ -16,4 +16,12 @@
 
 <hr>
 
-
+<div style="margin-top: 10px;">
+  <%= link_to 'Edit Task', edit_task_path(@task), style: "color: white; background-color: #007bff; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block;" %>
+</div>
+<div>
+  &nbsp;
+</div>
+<div>
+  <%= link_to 'Delete Task', "/delete_task/", style: "color: white; background-color: red; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block;" %>
+</div>

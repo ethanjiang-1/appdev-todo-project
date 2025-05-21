@@ -49,4 +49,35 @@ class TasksController < ApplicationController
   def new
     render template: "tasks/new"
   end
+
+  def destroy
+    @task = Task.find(params[:id])
+    @task.destroy
+
+    flash[:notice] = "Task deleted successfully."
+    redirect_to "/tasks"
+  end
+
+  def edit
+    @task = Task.find(params[:id])
+    render template: "tasks/edit"
+  end
+
+  def update
+    @task = Task.find(params[:id])
+    @task.title = params.fetch("query_title")
+    @task.notes = params.fetch("query_notes")
+    @task.due_date = params.fetch("query_due_date")
+
+    listable_type, listable_id = params.fetch("query_listable").split(",")
+    @task.listable = listable_type.constantize.find(listable_id)
+
+    if @task.save
+      flash[:notice] = "Task updated successfully."
+      redirect_to "/tasks"
+    else
+      flash[:alert] = "Failed to update task."
+      render template: "tasks/edit"
+    end
+  end
 end

@@ -1,0 +1,33 @@
+<h1> Edit Task </h1>
+
+<hr>
+
+<form action="/update_task/<%= @task.id %>" method="post">
+  <div>
+    <label for="task_title">Task Title:</label>
+    <input type="text" id="task_title" name="query_title" value="<%= @task.title %>" required>
+  </div>
+
+  <div>
+    <label for="task_notes">Description:</label>
+    <textarea id="task_notes" name="query_notes" rows="3"><%= @task.notes %></textarea>
+  </div>
+
+  <div>
+    <label for="task_due_date">Due Date:</label>
+    <input type="date" id="task_due_date" name="query_due_date" value="<%= @task.due_date&.strftime('%Y-%m-%d') %>" required>
+  </div>
+
+  <div>
+    <label for="task_listable">Assign To:</label>
+    <select id="task_listable" name="query_listable" required>
+      <option value="User,<%= current_user.id %>" <%= @task.listable_type == 'User' && @task.listable_id == current_user.id ? 'selected' : '' %>>Personal (Me)</option>
+      <% current_user.groups_joined.each do |group| %>
+        <option value="Group,<%= group.id %>" <%= @task.listable_type == 'Group' && @task.listable_id == group.id ? 'selected' : '' %>><%= group.name %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <button type="submit">Update Task</button>
+  <a href="<%= task_path(@task) %>" class="btn btn-secondary" style="margin-left: 1em;">Cancel</a>
+</form>
