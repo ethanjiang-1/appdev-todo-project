@@ -1,1 +1,19 @@
 <h1> <%= @task.title %> </h1>
+
+<hr>
+
+<h2> Due Date: <%= @task.due_date&.strftime('%Y-%m-%d') %> </h2>
+<h3> Assigned To: </h3>
+<p>
+  <% if @task.listable_type == 'User' %>
+    <%= @task.listable.first_name %> <%= @task.listable.last_name %>
+  <% else %>
+    <%= link_to @task.listable.name, group_path(@task.listable) %>
+  <% end %>
+</p>
+<h3> Description: </h3>
+<p> <%= @task.notes %> </p>
+
+<hr>
+
+

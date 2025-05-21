@@ -1,0 +1,30 @@
+<h1>New Task</h1>
+
+<form action="/create_task" method="post">
+  <div>
+    <label for="task_title">Task Title:</label>
+    <input type="text" id="task_title" name="query_title" required>
+  </div>
+
+  <div>
+    <label for="task_notes">Description:</label>
+    <textarea id="task_notes" name="query_notes" rows="3"></textarea>
+  </div>
+
+  <div>
+    <label for="task_due_date">Due Date:</label>
+    <input type="date" id="task_due_date" name="query_due_date" required>
+  </div>
+
+  <div>
+    <label for="task_listable">Assign To:</label>
+    <select id="task_listable" name="query_listable" required>
+      <option value="<%= current_user.class.name %>,<%= current_user.id %>">Personal (Me)</option>
+      <% current_user.groups_joined.each do |group| %>
+        <option value="Group,<%= group.id %>"><%= group.name %></option>
+      <% end %>
+    </select>
+  </div>
+
+  <button type="submit">Create Task</button>
+</form>

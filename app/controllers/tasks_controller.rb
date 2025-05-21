@@ -24,4 +24,29 @@ class TasksController < ApplicationController
     @task = Task.find(params[:task_id])
     render template: "tasks/show"
   end
+
+  def create
+    @task = Task.new
+    @task.title = params.fetch("query_title")
+    @task.notes = params.fetch("query_notes")
+    @task.due_date = params.fetch("query_due_date")
+
+    # Parse listable
+    listable_type, listable_id = params.fetch("query_listable").split(",")
+    @task.listable = listable_type.constantize.find(listable_id)
+
+    @task.creator = current_user
+
+    if @task.save
+      flash[:notice] = "Task created successfully."
+      redirect_to "/tasks"
+    else
+      flash[:alert] = "Failed to create task."
+      render template: "tasks/new"
+    end
+  end
+
+  def new
+    render template: "tasks/new"
+  end
 end
