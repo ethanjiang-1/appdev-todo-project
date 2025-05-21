@@ -19,7 +19,7 @@
       <% @personal_tasks.each do |task| %>
         <tr>
           <td style="border-right: 1px solid #ccc;"> <%= task.title %> </td>
-          <td style="text-align: center; border-right: 1px solid #ccc;"> <%= task.due_date&.strftime('%Y-%m-%d') %> </td>
+          <td style="text-align: center; border-right: 1px solid #ccc;"> <%= task.due_date&.strftime('%x') %> </td>
           <td style="text-align: center;"> <%= link_to 'Show', task_path(task) %> </td>
         </tr>
       <% end %>
@@ -56,7 +56,7 @@
         <tr>
           <td style="border-right: 1px solid #ccc;"> <%= task.title %> </td>
           <td style="border-right: 1px solid #ccc; text-align:center"> <%= link_to task.listable.name, group_path(task.listable) %> </td>
-          <td style="text-align: center; border-right: 1px solid #ccc;"> <%= task.due_date&.strftime('%Y-%m-%d') %> </td>
+          <td style="text-align: center; border-right: 1px solid #ccc;"> <%= task.due_date&.strftime('%x') %> </td>
           <td style="text-align: center;"> <%= link_to 'Show', group_task_path(task.listable, task) %> </td>
         </tr>
       <% end %>
