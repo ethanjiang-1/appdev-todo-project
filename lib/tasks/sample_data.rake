@@ -36,7 +36,7 @@ task sample_data: :environment do
   puts "  → #{users.count} users created"
 
   puts "== Creating groups =="
-  groups = 3.times.map do
+  groups = 4.times.map do
     creator = users.sample
     group = Group.create!(
       name: Faker::Team.name,
