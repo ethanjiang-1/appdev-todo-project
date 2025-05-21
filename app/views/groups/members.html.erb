@@ -1,0 +1,29 @@
+<h1> <%= @group.name %> Members </h1>
+
+<hr>
+<h2> Group members: </h2>
+<div>
+  <ul>
+    <% GroupMembership.where(group_id: @group.id).includes(:user).each do |membership| %>
+      <% user = membership.user %>
+      <li>
+        <% if user == current_user %>
+          <p> 
+            <%= user.first_name %> <%= user.last_name %> (You)
+          </p>
+        <% else %>
+          <p>
+            <%= user.first_name %> <%= user.last_name %>
+            <% if membership.role != "admin" %>
+              <%= link_to '(Remove)', "/groups/#{@group.id}/remove_member?user_id=#{user.id}", method: :post, class: 'inline', style: 'color: red;' %>
+            <% end %>
+          </p>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</div>
+
+<hr>
+
+

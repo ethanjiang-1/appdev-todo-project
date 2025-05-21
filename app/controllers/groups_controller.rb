@@ -54,4 +54,25 @@ class GroupsController < ApplicationController
 
     redirect_to "/groups", notice: "Group deleted successfully."
   end
+
+  def manage_members
+    @group = Group.find(params[:id])
+    @members = @group.users
+    @non_members = User.where.not(id: @members.pluck(:id))
+    render template: "groups/members"
+  end
+
+  def add_member
+  end
+
+  def remove_member
+    @group = Group.find(params[:id])
+    if params[:user_id].present?
+      @user = User.find(params[:user_id])
+      GroupMembership.find_by(group: @group, user: @user)&.destroy
+      redirect_to "/groups/#{@group.id}/manage_members", notice: "#{@user.first_name} #{@user.last_name} removed from the group."
+    else
+      redirect_to "/groups/#{@group.id}/manage_members", alert: "No user specified."
+    end
+  end
 end
