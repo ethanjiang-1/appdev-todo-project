@@ -30,4 +30,28 @@ class GroupsController < ApplicationController
       render :new
     end
   end
+
+  def edit
+    @group = Group.find(params[:id])
+    render template: "groups/edit"
+  end
+
+  def update
+    @group = Group.find(params[:id])
+    @group.name = params.fetch("query_name")
+    @group.description = params.fetch("query_description")
+
+    if @group.save
+      redirect_to group_path(@group), notice: "Group updated successfully."
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @group = Group.find(params[:id])
+    @group.destroy
+
+    redirect_to "/groups", notice: "Group deleted successfully."
+  end
 end

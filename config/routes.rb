@@ -29,5 +29,8 @@ Rails.application.routes.draw do
   get "/groups/:group_id/tasks/:task_id" => "tasks#show_group"
   get "/groups/new" => "groups#new"
   post "/create_group" => "groups#create"
+  get "/groups/:id/edit" => "groups#edit" #add
+  post "/update_group/:id" => "groups#update" #add
+  get "/delete_group/:id" => "groups#destroy" #add
 
 end

@@ -1,0 +1,21 @@
+<h1> Edit Group </h1>
+
+<hr>
+
+<form action="/update_group/<%= @group.id %>" method="post">
+  <div>
+    <label for="group_name">Group Name:</label>
+    <input type="text" id="group_name" name="query_name" value="<%= @group.name %>" required>
+  </div>
+
+  <div>
+    <label for="group_notes">Description:</label>
+    <textarea id="group_notes" name="query_description" rows="3"><%= @group.description %></textarea>
+  </div>
+
+  <button type="submit">Update group</button>
+
+</form>
+<div>
+<a href="<%= group_path(@group) %>" class="btn btn-secondary" style="margin-left: 1em;">Cancel</a>
+</div>

@@ -50,4 +50,18 @@
   </table>
 </div>
 <hr>
+
+<% if GroupMembership.exists?(user_id: current_user.id, group_id: @group.id, role: "admin") %>
+  <div style="margin-top: 10px;">
+  <%= link_to 'Create New Task', new_group_task_path(@group), style: "color: white; background-color: #007bff; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block;" %>
+  </div>
+  <div>
+    &nbsp;
+  </div>
+  <div>
+    <%= link_to 'Delete Group', "/delete_group/#{@group.id}", style: "color: white; background-color: red; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block;" %>
+  </div>
+  <hr>
+<% end %>
+
 <%= link_to 'Back to Your Groups', groups_path, class: 'btn btn-secondary' %>
