@@ -1,4 +1,4 @@
-<h1> <%= @group.name %> Members </h1>
+<h1> Manage <%= @group.name %> Members </h1>
 
 <hr>
 <h2> Group members: </h2>
@@ -26,4 +26,21 @@
 
 <hr>
 
+<h2> Add a new member: </h2>
+<div>
+  <form action="/groups/<%= @group.id %>/add_member" method="post">
+    <div>
+      <label for="user_email">User Email:</label>
+      <input type="text" id="user_email" name="query_email" required>
+    </div>
 
+    <div>
+      <label for="role">Role:</label>
+      <select id="role" name="role">
+        <option value="member">Member</option>
+        <option value="admin">Admin</option>
+      </select>
+    </div>
+
+    <button type="submit">Add Member</button>
+  </form>

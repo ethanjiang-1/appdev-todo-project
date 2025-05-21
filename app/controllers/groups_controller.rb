@@ -63,6 +63,19 @@ class GroupsController < ApplicationController
   end
 
   def add_member
+    @group = Group.find(params[:id])
+    @user_email = params.fetch("query_email")
+    if @user_email.present?
+      @user = User.find_by(email: @user_email)
+      if @user && !GroupMembership.exists?(group: @group, user: @user)
+        GroupMembership.create!(group: @group, user: @user, role: :member)
+        redirect_to "/groups/#{@group.id}/manage_members"
+      else
+        redirect_to "/groups/#{@group.id}/manage_members", alert: "User not found or already a member."
+      end
+      else
+        redirect_to "/groups/#{@group.id}/manage_members", alert: "User not found."
+    end 
   end
 
   def remove_member
