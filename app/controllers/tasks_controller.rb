@@ -76,4 +76,22 @@ class TasksController < ApplicationController
       render template: "tasks/edit"
     end
   end
+
+  def complete
+    @task = Task.find(params[:id])
+    @task.completed_at = Time.now
+    @task.save
+
+    flash[:notice] = "Task marked as complete."
+    redirect_to "/tasks/#{params[:id]}"
+  end
+
+  def incomplete
+    @task = Task.find(params[:id])
+    @task.completed_at = nil
+    @task.save
+
+    flash[:notice] = "Task marked as incomplete."
+    redirect_to "/tasks/#{params[:id]}"
+  end
 end

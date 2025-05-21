@@ -20,6 +20,8 @@ Rails.application.routes.draw do
   get "/delete_task/:id" => "tasks#destroy"
   get "/tasks/:id/edit" => "tasks#edit"
   post "/update_task/:id" => "tasks#update"
+  post "/tasks/:id/complete" => "tasks#complete"
+  post "/tasks/:id/incomplete" => "tasks#incomplete"
 
   #groups
   get "/groups" => "groups#index"

@@ -1,5 +1,17 @@
 <h1> <%= @task.title %> </h1>
 
+<% if @task.completed_at.nil? %>
+  <div style="border: 1px solid #ccc; background-color: #f8f9fa; color: #555; padding: 12px; border-radius: 8px; margin-bottom: 16px; width: fit-content;">
+    Incomplete
+  </div>
+  <%= button_to 'Mark as Complete', "/tasks/#{@task.id}/complete", method: :post, style: 'background-color: #28a745; color: white; padding: 8px 16px; border-radius: 8px; border: none; margin-bottom: 16px; font-weight: bold;', form: { style: 'display: inline-block;' } %>
+<% else %>
+  <div style="border: 1px solid #b2dfdb; background-color: #e6ffed; color: #256029; padding: 12px; border-radius: 8px; margin-bottom: 16px; width: fit-content;">
+    Completed on <%= @task.completed_at.strftime('%m/%d/%Y') %>
+  </div>
+  <%= button_to 'Mark as Incomplete', "/tasks/#{@task.id}/incomplete", method: :post, style: 'background-color: #e0e0e0; color: #555; padding: 8px 16px; border-radius: 8px; border: none; margin-bottom: 16px; font-weight: bold;', form: { style: 'display: inline-block;' } %>
+<% end %>
+
 <hr>
 
 <h2> Due Date: <%= @task.due_date&.strftime('%Y-%m-%d') %> </h2>
