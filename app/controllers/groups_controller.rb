@@ -17,10 +17,14 @@ class GroupsController < ApplicationController
   end
 
   def create
-    @group = Group.new(group_params)
+    @group = Group.new
     @group.creator = current_user
+    @group.name = params.fetch("query_name")
+    @group.description = params.fetch("query_description")
+    @group.creator_id = current_user.id
 
     if @group.save
+      GroupMembership.create!(group: @group, user: current_user, role: :admin)
       redirect_to group_path(@group), notice: "Group created successfully."
     else
       render :new
