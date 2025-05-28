@@ -40,7 +40,7 @@
             <% end %>
           </td>
           <td style="text-align: center; border-right: 1px solid #ccc;"> <%= task.due_date&.strftime('%m/%d/%Y') %> </td>
-          <td style="text-align: center;"> <%= link_to 'Show', group_task_path(@group, task) %> </td>
+            <td style="text-align: center;"> <a href="/groups/<%= @group.id %>/tasks/<%= task.id %>">Show</a> </td>
         </tr>
       <% end %>
       <% if @group.tasks.empty? %>
@@ -53,21 +53,21 @@
 
 <% if GroupMembership.exists?(user_id: current_user.id, group_id: @group.id, role: "admin") %>
   <div>
-    <%= link_to 'Edit Group', "/groups/#{@group.id}/edit", style: "color: white; background-color: #007bff; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block;" %>
+    <a href="/groups/<%= @group.id %>/edit" style="color: white; background-color: #007bff; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block;">Edit Group</a>
   </div>
   <div>
     &nbsp;
   </div>
   <div>
-    <%= link_to 'Manage Members', "/groups/#{@group.id}/manage_members", style: "color: white; background-color: #007bff; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block;" %>
+    <a href="/groups/<%= @group.id %>/manage_members" style="color: white; background-color: #007bff; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block;">Manage Members</a>
   </div>
   <div>
     &nbsp;
   </div>
   <div>
-    <%= link_to 'Delete Group', "/delete_group/#{@group.id}", style: "color: white; background-color: red; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block;" %>
+    <a href="/delete_group/<%= @group.id %>" style="color: white; background-color: red; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block;">Delete Group</a>
   </div>
   <hr>
 <% end %>
 
-<%= link_to 'Back to Your Groups', groups_path, class: 'btn btn-secondary' %>
+<a href="/groups" class="btn btn-secondary">Back to Your Groups</a>

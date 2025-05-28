@@ -3,9 +3,7 @@ class TasksController < ApplicationController
 
   def index
     @personal_tasks = Task.where(listable: current_user).order(:due_date)
-
     @groups = current_user.groups_joined.order(:name)
-
     @group_tasks = Task.where(listable: @groups).includes(listable: :creator).order(:due_date)
 
     render template: "tasks/index"
@@ -34,10 +32,8 @@ class TasksController < ApplicationController
     @task.creator = current_user
 
     if @task.save
-      flash[:notice] = "Task created successfully."
       redirect_to "/tasks"
     else
-      flash[:alert] = "Failed to create task."
       render template: "tasks/new"
     end
   end
@@ -50,7 +46,6 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
     @task.destroy
 
-    flash[:notice] = "Task deleted successfully."
     redirect_to "/tasks"
   end
 
@@ -69,10 +64,8 @@ class TasksController < ApplicationController
     @task.listable = listable_type.constantize.find(listable_id)
 
     if @task.save
-      flash[:notice] = "Task updated successfully."
       redirect_to "/tasks"
     else
-      flash[:alert] = "Failed to update task."
       render template: "tasks/edit"
     end
   end
@@ -82,7 +75,6 @@ class TasksController < ApplicationController
     @task.completed_at = Time.now
     @task.save
 
-    flash[:notice] = "Task marked as complete."
     redirect_to "/tasks/#{params[:id]}"
   end
 
@@ -91,7 +83,6 @@ class TasksController < ApplicationController
     @task.completed_at = nil
     @task.save
 
-    flash[:notice] = "Task marked as incomplete."
     redirect_to "/tasks/#{params[:id]}"
   end
 end

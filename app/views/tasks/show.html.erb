@@ -20,7 +20,7 @@
   <% if @task.listable_type == 'User' %>
     <%= @task.listable.first_name %> <%= @task.listable.last_name %>
   <% else %>
-    <%= link_to @task.listable.name, group_path(@task.listable) %>
+    <a href="/groups/<%= @task.listable.id %>"><%= @task.listable.name %></a>
   <% end %>
 </p>
 <h3> Description: </h3>
@@ -29,11 +29,11 @@
 <hr>
 
 <div style="margin-top: 10px;">
-  <%= link_to 'Edit Task', edit_task_path(@task), style: "color: white; background-color: #007bff; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block;" %>
+  <a href="/tasks/<%= @task.id %>/edit" style="color: white; background-color: #007bff; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block;">Edit Task</a>
 </div>
 <div>
   &nbsp;
 </div>
 <div>
-  <%= link_to 'Delete Task', "/delete_task/#{@task.id}", style: "color: white; background-color: red; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block;" %>
+  <a href="/delete_task/<%= @task.id %>" style="color: white; background-color: red; padding: 8px 16px; border-radius: 8px; text-decoration: none; display: inline-block;">Delete Task</a>
 </div>

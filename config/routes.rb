@@ -4,12 +4,13 @@ Rails.application.routes.draw do
   # personal tasks
   resources :tasks, only: %i[index new create edit update destroy]  
 
-  # group‐scoped tasks + member management
+  # group tasks + member management
   resources :groups do
     resources :group_memberships, only: %i[index new create edit update destroy]
     resources :tasks, only: %i[index new create edit update destroy], module: :groups
   end
 
+  # home
   root "tasks#index"
 
   #tasks

@@ -25,7 +25,7 @@ class GroupsController < ApplicationController
 
     if @group.save
       GroupMembership.create!(group: @group, user: current_user, role: :admin)
-      redirect_to group_path(@group), notice: "Group created successfully."
+      redirect_to "/groups/#{@group.id}"
     else
       render :new
     end
@@ -42,7 +42,7 @@ class GroupsController < ApplicationController
     @group.description = params.fetch("query_description")
 
     if @group.save
-      redirect_to group_path(@group), notice: "Group updated successfully."
+      redirect_to "/groups/#{@group.id}"
     else
       render :edit
     end
@@ -52,7 +52,7 @@ class GroupsController < ApplicationController
     @group = Group.find(params[:id])
     @group.destroy
 
-    redirect_to "/groups", notice: "Group deleted successfully."
+    redirect_to "/groups"
   end
 
   def manage_members
@@ -72,10 +72,10 @@ class GroupsController < ApplicationController
         GroupMembership.create!(group: @group, user: @user, role: @role)
         redirect_to "/groups/#{@group.id}/manage_members"
       else
-        redirect_to "/groups/#{@group.id}/manage_members", alert: "User not found or already a member."
+        redirect_to "/groups/#{@group.id}/manage_members"
       end
       else
-        redirect_to "/groups/#{@group.id}/manage_members", alert: "User not found."
+        redirect_to "/groups/#{@group.id}/manage_members"
     end 
   end
 
@@ -84,9 +84,9 @@ class GroupsController < ApplicationController
     if params[:user_id].present?
       @user = User.find(params[:user_id])
       GroupMembership.find_by(group: @group, user: @user)&.destroy
-      redirect_to "/groups/#{@group.id}/manage_members", notice: "#{@user.first_name} #{@user.last_name} removed from the group."
+      redirect_to "/groups/#{@group.id}/manage_members"
     else
-      redirect_to "/groups/#{@group.id}/manage_members", alert: "No user specified."
+      redirect_to "/groups/#{@group.id}/manage_members"
     end
   end
 end

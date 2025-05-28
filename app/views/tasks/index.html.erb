@@ -1,7 +1,6 @@
 <h1>Welcome, <%= current_user.first_name %>!</h1>
 
 <div style="max-width: 800px; margin: 0 auto;">
-  <!-- Personal Tasks Table -->
 
   <div style="text-align: center;">
     <a href="/tasks/new" style="display: inline-block; margin-bottom: 1em; padding: 0.5em 1em; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px;">Create New Task</a>
@@ -26,7 +25,7 @@
             <% end %>
           </td>
           <td style="text-align: center; border-right: 1px solid #ccc;"> <%= task.due_date&.strftime('%x') %> </td>
-          <td style="text-align: center;"> <%= link_to 'Show', task_path(task) %> </td>
+          <td style="text-align: center;"> <a href="/tasks/<%= task.id %>">Show</a> </td>
         </tr>
       <% end %>
       <% if @personal_tasks.empty? %>
@@ -39,7 +38,7 @@
   <h2>Your Groups</h2>
   <ul>
     <% @groups.each do |group| %>
-      <li><%= link_to group.name, group_path(group) %></li>
+      <li><a href="/groups/<%= group.id %>"><%= group.name %></a></li>
     <% end %>
     <% if @groups.empty? %>
       <li style="color: #888;">You are not a member of any groups.</li>
@@ -67,9 +66,9 @@
               <span style="color: green;"><%= task.title %></span>
             <% end %>
           </td>
-          <td style="border-right: 1px solid #ccc; text-align:center"> <%= link_to task.listable.name, group_path(task.listable) %> </td>
+          <td style="border-right: 1px solid #ccc; text-align:center"> <a href="/groups/<%= task.listable.id %>"><%= task.listable.name %></a> </td>
           <td style="text-align: center; border-right: 1px solid #ccc;"> <%= task.due_date&.strftime('%x') %> </td>
-          <td style="text-align: center;"> <%= link_to 'Show', group_task_path(task.listable, task) %> </td>
+          <td style="text-align: center;"> <a href="/groups/<%= task.listable.id %>/tasks/<%= task.id %>">Show</a> </td>
         </tr>
       <% end %>
       <% if @group_tasks.empty? %>
